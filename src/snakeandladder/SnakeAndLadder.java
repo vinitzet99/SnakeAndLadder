@@ -6,6 +6,10 @@ import java.util.Random;
 public class SnakeAndLadder {
     //instance variable declaration
     public static Random random=new Random();
+    public static final int NO_PLAY=0;
+    public static final int LADDER=1;
+    public static final int SNAKE=2;
+    public static int choice=0;
 
     //method to display message
     public static void display(String s,String position){
@@ -14,6 +18,25 @@ public class SnakeAndLadder {
     //method to roll dice
     public static int rollDice(){
         return (random.nextInt(6)+1);
+    }
+    //method to generate option to HOLD,CLIMB or BITE
+    public static int move(int pos,int dice){
+        int option=random.nextInt(3);
+        if(option==NO_PLAY){
+            display("Chosen not to Play","");
+            choice=NO_PLAY;
+            return pos;
+        }
+        else if(option==SNAKE){
+            display("Snake Bite !!","");
+            choice=SNAKE;
+            return pos-dice;
+        }
+        else{
+            display("Climb Ladder !!!","");
+            choice=LADDER;
+            return pos+dice;
+        }
     }
     // main method
     public static void main(String[] args){
@@ -24,5 +47,7 @@ public class SnakeAndLadder {
         display("You are on: ",Integer.toString(currentPos)); //start position
         dice=rollDice(); //roll a dice
         display("You got: ", Integer.toString(dice)); //Display value of dice
+        currentPos=move(currentPos,dice);
+        display("Current Position: ", Integer.toString(currentPos)); //Display new position
     }
 }
