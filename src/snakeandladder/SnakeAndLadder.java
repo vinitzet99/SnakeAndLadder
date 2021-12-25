@@ -27,6 +27,10 @@ public class SnakeAndLadder {
             display("You have to start from 0!!","");
             return minPosition;
         }
+        else if(position>maxPosition){
+            display("You require: "+(-position+dice+maxPosition)," to win !!!");
+            return position-dice;
+        }
         else return position;
     }
     //method to generate option to HOLD,CLIMB or BITE
