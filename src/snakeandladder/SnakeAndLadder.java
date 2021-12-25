@@ -28,7 +28,7 @@ public class SnakeAndLadder {
             return minPosition;
         }
         else if(position>maxPosition){
-            display("You require: "+(-position+dice+maxPosition)," to win !!!");
+            display("But player require: "+(-position+dice+maxPosition)," to win !!!");
             return position-dice;
         }
         else return position;
@@ -56,15 +56,18 @@ public class SnakeAndLadder {
         //variable declaration
         int currentPos = 0;
         int dice;
+        int countDiceRoll=0;
         System.out.println("Welcome to Snake and Ladder Game"); //welcome message
         while (currentPos != maxPosition) {
             display("You are on: ", Integer.toString(currentPos)); //start position
             dice = rollDice(); //roll a dice
+            countDiceRoll++; //count dice rolling
             display("You got: ", Integer.toString(dice)); //Display value of dice
             currentPos = move(currentPos, dice);
             currentPos= validatePos(dice,currentPos); //check if new position is valid
             display("Current Position: ", Integer.toString(currentPos)); //Display new position
 
         }
+        display("Dice Rolled for",Integer.toString(countDiceRoll)+" times."); //Display count of rolling
     }
 }
