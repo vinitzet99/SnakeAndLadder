@@ -12,6 +12,8 @@ public class SnakeAndLadder {
     public static int choice = 0;
     public static final int maxPosition=100;
     public static final int minPosition=0;
+    public static final int PLAYER1=1;
+    public static final int PLAYER2=2;
     //method to display message
     public static void display(String s, String position) {
         System.out.println(s + " " + position);
@@ -50,23 +52,47 @@ public class SnakeAndLadder {
             return pos + dice;
         }
     }
+    //method to decide player chance
+    public static int chance(int option,int playerChance){
+        if(option==LADDER){
+            return playerChance;
+        }
+        else{
+            if(playerChance==PLAYER1) {
+                display("*******************", "*****************");
+                return PLAYER2;
+            }
+            else {
+                display("*******************","*****************");
+                return PLAYER1;
+            }
+        }
+    }
+    //method to check which player won
+    public static void checkWon(int currentPos,int playerChance){
+        if(currentPos==maxPosition){
+            display("Player "+ playerChance, "Won !!!!");
 
+        }
+    }
     // main method
     public static void main(String[] args) {
         //variable declaration
-        int currentPos = 0;
+        int currentPos[] ={0,0,0};
         int dice;
         int countDiceRoll=0;
+        int playerChance=PLAYER1;
         System.out.println("Welcome to Snake and Ladder Game"); //welcome message
-        while (currentPos != maxPosition) {
-            display("You are on: ", Integer.toString(currentPos)); //start position
+        while(currentPos[playerChance]!=maxPosition) { // check if anyone reached 100
+            display("Turn of Player: ",Integer.toString(playerChance)); //Display which player is rolling
             dice = rollDice(); //roll a dice
             countDiceRoll++; //count dice rolling
             display("You got: ", Integer.toString(dice)); //Display value of dice
-            currentPos = move(currentPos, dice);
-            currentPos= validatePos(dice,currentPos); //check if new position is valid
-            display("Current Position: ", Integer.toString(currentPos)); //Display new position
-
+            currentPos[playerChance] = move(currentPos[playerChance], dice); //move player
+            currentPos[playerChance]= validatePos(dice,currentPos[playerChance]); //check if new position is valid
+            display("Current Position: ", Integer.toString(currentPos[playerChance])); //Display new position
+            checkWon(currentPos[playerChance],playerChance);//check if anyone won
+            playerChance=chance(choice,playerChance);//decide chance
         }
         display("Dice Rolled for",Integer.toString(countDiceRoll)+" times."); //Display count of rolling
     }
